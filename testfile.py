@@ -1,6 +1,6 @@
 import bcrypt
 from datetime import datetime
-# parol = "vivapro123"
-# let = bcrypt.hashpw(parol, bcrypt.gensalt())
-# print(let)
-print(datetime.now().strftime("%Y-%m-%d"))
+parol = "vivapro12"
+let = bcrypt.hashpw(parol.encode('utf-8'), bcrypt.gensalt())
+print(let[29])
+print(let)

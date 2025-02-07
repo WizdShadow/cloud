@@ -1,1 +1,1 @@
-from .func import hash_parol
+from .func import hash_parol, check_parol, crt_fold

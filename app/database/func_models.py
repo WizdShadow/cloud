@@ -15,7 +15,7 @@ async def init_db():
         await conn.run_sync(Base.metadata.create_all)
         
 async def get_user(session, name):        
-    query = select(User).where(User.name == name)
+    query = select(User).where(User.username == name)
     result = await session.execute(query)
     following = result.scalars().first()
     return following
