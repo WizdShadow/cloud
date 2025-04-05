@@ -1,24 +1,35 @@
-from app.shema import Users, Status, Login
-from app.func import hash_parol, check_parol, crt_fold
-from fastapi import Depends, APIRouter
-from app.database import get_session, get_user, User
+from app.shema.shema import Users, Status, Login
+from app.func.func import hash_parol, check_parol, crt_fold, create_token, sec_key, alg, kafka_producer
+from fastapi import Depends, APIRouter, Response, status, Request, Form
+from fastapi.responses import RedirectResponse  
+from app.database.func_models import get_session, get_user, User
 from datetime import date
 import asyncio
+from typing import Annotated
+from app.config.config import templates
+import jwt
 
-router = APIRouter()    
+router = APIRouter()   
+
+
 
 @router.get("/add/file")
 async def add_file():
     return {"message": "Hello World"}
 
+@router.get("/register")
+async def get_register(request: Request = None):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+
 @router.post("/register")
-async def register(user: Users, session=Depends(get_session)):
+async def post_register(user: Annotated[Users, Form()], session=Depends(get_session), response: Response = None,):
     name = await get_user(session, user.username)
     if name:
         return Status(result=False)
     
     pasw =  await hash_parol(user.password)
-    asyncio.create_task(crt_fold(user.username))
+    asyncio.create_task(kafka_producer(user.username))
     
     user =User(username=user.username,
                email=user.email,
@@ -30,7 +41,10 @@ async def register(user: Users, session=Depends(get_session)):
                storage_used=0)
     session.add(user)
     await session.commit()
-    return Status(result=True)
+    response = RedirectResponse(url="/profile", status_code=status.HTTP_302_FOUND)
+    response.set_cookie(key="token", value=await create_token({"username":user.username}), httponly=True, secure=False)
+    return response
+
 
 @router.post("/login")
 async def login(login: Login, session=Depends(get_session)):
@@ -43,4 +57,16 @@ async def login(login: Login, session=Depends(get_session)):
     elif not pasw_db:
         return Status(result=False)
     
-    return Status(result=True)
+    return 
+
+
+@router.get("/profile")
+async def profile(request: Request = None):
+    token = request.cookies.get("token")
+    if not token:
+        return RedirectResponse(url="/register", status_code=status.HTTP_302_FOUND)
+    jwt_data = jwt.decode(token, sec_key, algorithms=[alg])
+    return templates.TemplateResponse("profile.html", {
+        "request": request
+        , "username": jwt_data["username"]
+        })

@@ -1,0 +1,4 @@
+github.com/confluentinc/confluent-kafka-go/v2 v2.8.0 h1:0HlcSNWg4LpLA9nIjzUMIqWHI+w0S68UN7alXAc3TeA=
+github.com/confluentinc/confluent-kafka-go/v2 v2.8.0/go.mod h1:hScqtFIGUI1wqHIgM3mjoqEou4VweGGGX7dMpcUKves=
+github.com/golang-jwt/jwt/v5 v5.2.2 h1:Rl4B7itRWVtYIHFrSNd7vhTiz9UpLdi6gZhZ3wEeDy8=
+github.com/golang-jwt/jwt/v5 v5.2.2/go.mod h1:pqrtFR0X4osieyHYxtmOUWsAWrfe1Q5UVIyoH402zdk=

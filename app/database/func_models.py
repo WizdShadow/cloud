@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from .models import User, Base
 
-engine = create_async_engine("postgresql+asyncpg://myuser:mypassword@localhost:5500/postgres")
+engine = create_async_engine("postgresql+asyncpg://myuser:mysecretpassword@localhost:5500/postgres")
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 async def get_session():
