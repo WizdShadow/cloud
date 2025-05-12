@@ -22,3 +22,20 @@ services:
       - "8080:8080"
     environment:
       KAFKA_BROKERS: "kafka:9092"  # имя контейнера Kafka
+
+  postgres:
+    image: postgres:latest
+    container_name: cloud_postgres
+    ports:
+        - "5500:5432"
+    environment:
+        - POSTGRES_USER=myuser
+        - POSTGRES_PASSWORD=mysecretpassword
+        - POSTGRES_DB=postgres
+
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+    
+   
+volumes:
+  postgres_data:
