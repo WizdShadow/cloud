@@ -1,0 +1,90 @@
+body{
+    background-image: url("/static/img/background.png");
+}
+
+.d1 {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 1820px;       
+  height: 849px;      
+  background-color: rgb(128, 151, 178, 0.6 );  
+  border: 2px solid rgb(255, 255, 255, 0.4); 
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px; 
+}
+
+.d2 {
+  
+  width: 1520px;     
+  height: 50px;      
+  background-color: rgba(255, 255, 255);  
+  border: 2px solid rgb(255, 255, 255, 0.4); 
+  border-top-left-radius: 20px;
+  border-right: none;  
+
+}
+
+.d3 {
+  position: absolute;
+  top: 0px;
+  left: 1522px;
+  width: 296px;       
+  height: 50px;      
+  background-color: blue; 
+  border: 2px solid rgb(255, 255, 255, 0.4); 
+  border-top-right-radius: 20px;
+  border-left: none; 
+
+}
+
+.d4{
+  position: relative;
+  top: 235px;
+  left: 748px;
+  width: 442px;       
+  height: 274px;      
+  background-color: blue; 
+}
+
+.l{
+    position: absolute;
+    top: 11px;
+    left: 44px;
+    font-size: 20px;
+    color: white;
+    border: none;
+    background: none;
+}
+
+.R{
+    position: absolute;
+    top: 11px;
+    left: 157px;
+    font-size: 20px;
+    color: white;
+    border: none;
+    background: none;
+}
+
+.R:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+
+}
+
+.l:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.log{
+    position: absolute;
+    top: 11px;
+    left: 44px;
+    font-size: 20px;
+    color: red;
+    border: none;
+    max-width: calc(100% - 44px); /* Чтобы не выходило за правую границу */
+    max-height: calc(100% - 11px);
+}

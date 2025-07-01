@@ -4,10 +4,12 @@ import os
 import jwt
 from datetime import datetime, timedelta
 from aiokafka import AIOKafkaProducer
+import redis
 
 sec_key="secret"
 alg = "HS256"
-time_token=3600 
+time_token=3660 
+redis_client = redis.Redis(host="localhost", port=6379, db=0)
 
 async def kafka():
     producer = AIOKafkaProducer(bootstrap_servers="localhost:9094")

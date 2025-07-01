@@ -1,6 +1,6 @@
 from app.shema.shema import Users, Status, Login
 from app.func.func import hash_parol, check_parol, crt_fold, create_token, sec_key, alg, kafka_producer
-from fastapi import Depends, APIRouter, Response, status, Request, Form
+from fastapi import Depends, APIRouter, Response, status, Request, Form, HTTPException
 from fastapi.responses import RedirectResponse  
 from app.database.func_models import get_session, get_user, User
 from datetime import date
@@ -17,9 +17,20 @@ router = APIRouter()
 async def add_file():
     return {"message": "Hello World"}
 
+
+@router.get("/")
+async def get_index(request: Request = None):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
 @router.get("/register")
 async def get_register(request: Request = None):
     return templates.TemplateResponse("register.html", {"request": request})
+
+
+@router.get("/login")
+async def get_login(request: Request = None):
+    return templates.TemplateResponse("login.html", {"request": request})
 
 
 @router.post("/register")
@@ -57,14 +68,21 @@ async def login(login: Login, session=Depends(get_session)):
     elif not pasw_db:
         return Status(result=False)
     
-    return 
+    
+    return {"result": True, "token": await create_token({"username":login.username})}
 
 
 @router.get("/profile")
 async def profile(request: Request = None):
-    token = request.cookies.get("token")
-    if not token:
-        return RedirectResponse(url="/register", status_code=status.HTTP_302_FOUND)
+    token = request.headers.get("Authorization")
+    # if not token:
+    #     return RedirectResponse(url="/register", status_code=status.HTTP_302_FOUND)
+    try:
+        scheme, token = token.split()
+        if scheme.lower() != "bearer":
+            raise HTTPException(status_code=400, detail="Invalid authentication scheme")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid authorization header format")
     jwt_data = jwt.decode(token, sec_key, algorithms=[alg])
     return templates.TemplateResponse("profile.html", {
         "request": request
