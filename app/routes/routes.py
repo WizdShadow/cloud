@@ -8,15 +8,14 @@ import asyncio
 from typing import Annotated
 from app.config.config import templates
 import jwt
+from app.redis.redis import redis_set, redis_get
 
 router = APIRouter()   
-
 
 
 @router.get("/add/file")
 async def add_file():
     return {"message": "Hello World"}
-
 
 @router.get("/")
 async def get_index(request: Request = None):
@@ -59,7 +58,6 @@ async def post_register(user: Annotated[Users, Form()], session=Depends(get_sess
 
 @router.post("/login")
 async def login(login: Login, session=Depends(get_session)):
-    
     pasw_db, status = await check_parol(login.username, login.password, session)
     if not status:
         return Status(result=False)
@@ -67,24 +65,23 @@ async def login(login: Login, session=Depends(get_session)):
         return Status(result=False)
     elif not pasw_db:
         return Status(result=False)
-    
-    
-    return {"result": True, "token": await create_token({"username":login.username})}
+    token = await create_token({"username":login.username})
+    await redis_set(token, token)
+    return {"result": True, "token": token} 
 
 
 @router.get("/profile")
 async def profile(request: Request = None):
+    return templates.TemplateResponse("profile.html", {"request": request})
+
+
+@router.get("/check")
+async def check(request: Request = None):
     token = request.headers.get("Authorization")
-    # if not token:
-    #     return RedirectResponse(url="/register", status_code=status.HTTP_302_FOUND)
-    try:
-        scheme, token = token.split()
-        if scheme.lower() != "bearer":
-            raise HTTPException(status_code=400, detail="Invalid authentication scheme")
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid authorization header format")
-    jwt_data = jwt.decode(token, sec_key, algorithms=[alg])
-    return templates.TemplateResponse("profile.html", {
-        "request": request
-        , "username": jwt_data["username"]
-        })
+    print(token)
+    if not token:
+        return {"status": False}
+    token = await redis_get(token)
+    if token is None:
+        return {"status": False}
+    return {"status": True}

@@ -1,15 +1,15 @@
 import bcrypt
-from app.database.func_models import get_user
 import os
 import jwt
 from datetime import datetime, timedelta
 from aiokafka import AIOKafkaProducer
-import redis
+from app.database.func_models import get_user
+from app.redis.redis import redis_set
 
 sec_key="secret"
 alg = "HS256"
 time_token=3660 
-redis_client = redis.Redis(host="localhost", port=6379, db=0)
+
 
 async def kafka():
     producer = AIOKafkaProducer(bootstrap_servers="localhost:9094")
@@ -36,6 +36,7 @@ async def create_token(data: dict):
     expire = datetime.utcnow() + timedelta(minutes=time_token)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, sec_key, algorithm=alg)
+    await redis_set("token", encoded_jwt)
     return encoded_jwt
     
 async def kafka_producer(name):

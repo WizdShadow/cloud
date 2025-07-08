@@ -8,17 +8,24 @@
     <title>Document</title> 
 </head> 
 <body> 
-    
+    <div class="overlay"></div>
     <div class="d1">
         <div class="d2">
         </div>
         <div class="d3">
             <button type="button" class="l">Логин</button>
             <button type="button" class="R" onclick="test()">Регистрация</button>
+            <a href="/profile" class="user_name"></a>
         </div>
     </div>
     <div class="d4">
-        <input class="log" type="sumbit">
+        <input class="log" id="login" type="text">
+        <input class="pass" id="password" type="text">
+        <h2 class="log_text">Авторизация</h2>
+        <h3 class="log_text_log">Логин</h3>
+        <h3 class="log_text_pass">Пароль</h3>
+        <h3 class="error" id="error">Неверный логин или пароль</h3>
+        <button type="button" class="log_button">Войти</button>
     </div>
     <script src="/static/js/test.js"></script>
 </body> 
