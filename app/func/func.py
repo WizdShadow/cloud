@@ -36,7 +36,7 @@ async def create_token(data: dict):
     expire = datetime.utcnow() + timedelta(minutes=time_token)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, sec_key, algorithm=alg)
-    await redis_set("token", encoded_jwt)
+    await redis_set(encoded_jwt, encoded_jwt)
     return encoded_jwt
     
 async def kafka_producer(name):

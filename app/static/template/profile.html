@@ -4,8 +4,45 @@
   <meta charset="utf-8" />
   <title></title>
   <link rel="stylesheet" href="static/css/profile.css" />
+  <link rel="stylesheet" href="static/css/type_file.css" />
 </head>
 <body>
- <script src="static/js/profile.js"></script>
+<div class="container">
+  <img src="static/img/no_avatar.png" alt="static/img/no_avatar.png" class="avatar">
+  <h3 class="name">Имя</h3>
+  <h3 class="email">Почта</h3>
+  <h3 class="date">Дата Регистрация</h3>
+  <button type="button" class="download">Загрузить картинку</button>
+  <button type="button" class="exit">Выйти</button>
+  <button type="button" class="file" id="type">TXT</button>
+</div>
+<div class="type_file">
+  <button type="button" class="text_file" onclick="but(this)">Text_file</button>
+  <button type="button" class="image_file">Image_file</button>
+  <button type="button" class="video_file">Video_file</button>
+  <button type="button" class="archive_file">Archive_file</button>
+  <button type="button" class="sound_file">Sound_file</button>
+  <button type="button" class="other">Other</button>
+</div>
+<table >
+  <thead class="colums">
+    <tr >
+      <th>Название</th>
+      <th>Размер</th>
+      <th>Дата</th>
+      <th>Тип файла</th>
+      <th>Ссылка</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>9.1</td>
+      <td>Зелёная миля</td>
+      <td>1999</td>
+    </tr>
+  </tbody>
+</table>
+<script src="static/js/profile.js"></script>
 </body>
 </html>

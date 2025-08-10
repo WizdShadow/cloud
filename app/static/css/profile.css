@@ -1,3 +1,68 @@
 body{
     background-image: url("/static/img/background.png");
 }
+
+.avatar{
+    position: absolute;
+    top: 109px;
+    left: 1427px;
+    width: 161px;
+    height: 216px;      
+}
+
+.name{
+    position: absolute;
+    top: 108px;
+    left: 1669px;
+    width: 161px;
+    height: 216px;
+    font-size: 25px;      
+}
+
+.email{
+    position: absolute;
+    top: 170px;
+    left: 1665px;
+    width: 161px;
+    height: 216px;
+    font-size: 25px;       
+}
+
+.date{
+    position: absolute;
+    top: 234px;
+    left: 1632px;
+    width: 161px;
+    height: 216px;
+    font-size: 25px;       
+}
+
+.download{
+    position: absolute;
+    top: 330px;
+    left: 1428px;
+    width: 160px;
+    height: 42px;    
+}
+
+.exit{
+    position: absolute;
+    top: 376px;
+    left: 1428px;
+    width: 160px;
+    height: 42px;    
+}
+
+.file{
+    cursor: pointer;
+    position: absolute;
+    top: 376px;
+    left: 65px;
+    width: 160px;
+    height: 42px;    
+}
+
+.colums{
+    background-color: brown;
+    border-radius: 0px;
+}

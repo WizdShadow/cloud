@@ -4,7 +4,14 @@ async function updateFunc(){
     const R = document.querySelector(".R")
     const username = document.querySelector(".user_name")
     if (token){
-        token_new = token.split(".")[1]
+        const response = await fetch("/check", {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        const data = await response.json()
+        if (data.status === true) {
+          token_new = token.split(".")[1]
         const name = atob(token_new)
         const news = name.replace(/\\/g, "")
         const obj = JSON.parse(news)
@@ -12,10 +19,13 @@ async function updateFunc(){
         l.style.display = "none"
         R.style.display = "none"
         username.style.display = "block"
-        username.textContent = obj.username
-
-    }
-    
+        username.textContent = obj.username  
+        }else{
+            l.style.display = "block"
+        R.style.display = "block"
+        username.style.display = "none"
+        }
+    }   
 }
 
 document.querySelector(".l").addEventListener("click", () => {

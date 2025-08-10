@@ -66,7 +66,6 @@ async def login(login: Login, session=Depends(get_session)):
     elif not pasw_db:
         return Status(result=False)
     token = await create_token({"username":login.username})
-    await redis_set(token, token)
     return {"result": True, "token": token} 
 
 

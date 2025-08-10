@@ -16,6 +16,7 @@ class User(Base):
     is_active = Column(Boolean)
     storage_limit = Column(BigInteger)
     storage_used = Column(BigInteger)
+    avatar = Column(String)
     
 #     image = relationship("Image", back_populates="user")
     
